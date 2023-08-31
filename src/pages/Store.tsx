@@ -4,7 +4,7 @@ import { StoreItem } from '../components/StoreItem';
 export function Store() {
     return (
         <>
-        <div className='grid grid-cols-1 gap-y-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
+        <div className='grid gap-x-3 grid-cols-1 gap-y-3 lg:grid-cols-2 xl:grid-cols-3'>
             {storeItems.map(item => {
                 return (
                     <div key={item.id}>

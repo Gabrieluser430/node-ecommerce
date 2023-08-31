@@ -26,7 +26,27 @@ export function StoreItem({ id, name, price, imgUrl}: StoreItemsProps) {
                     <span className="text-gray-600">{formatCurrency(price)}</span>
                 </div>
                 <div>
-                    HEllo
+                    {quantity === 0 ? (
+                        <button className=" w-full text-white bg-blue-500 rounded-sm p-2 mt-4 ">
+                           + Add To Cart
+                        </button>
+                    ) : (
+                        <div className="flex flex-col justify-center items-center mt-4">
+                            <div className="flex flex-row justify-center items-center h-10 ">
+                                <button className="text-center bg-blue-500 rounded-md text-white text-2xl w-10 h-full">-</button>
+                                <div className="mx-4">
+                                    <span className="font-semibold text-xl mr-2">{quantity}</span>
+                                    in cart
+                                </div>
+                                <button className="bg-blue-500 rounded-md text-white text-xl w-10 h-full">+</button>
+                            </div>
+                            <div className="">
+                                <button className="bg-red-600 text-white font-semibold rounded-md mt-2 px-6 py-2">
+                                    Remove
+                                </button>
+                            </div>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
