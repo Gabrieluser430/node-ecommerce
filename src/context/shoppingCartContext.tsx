@@ -9,14 +9,14 @@ type CartItem = {
     quantity: number;
 }
 
-type ShoppingContextType = {
+export type ShoppingContextType = {
     getItemQuantity: (id:number) => number;
     increaseCartQuantity: (id:number) => void;
     decreaseCartQuantity: (id:number) => void;
     removeFromCart: (id:number) => void;
 }
 
-const ShoppingCartContext = createContext<ShoppingContextType>({});
+const ShoppingCartContext = createContext<ShoppingContextType | undefined>(undefined);
 
 export function useShoppingCart() {
     return useContext(ShoppingCartContext);
@@ -69,8 +69,16 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
         })        
     }
 
+    function removeFromCart(id:number) {
+        setCartItems(currItems => {
+            return currItems.filter(item => {
+                return item.id !== id;
+            })
+        })
+    }
+
     return (
-        <ShoppingCartContext.Provider value={{ getItemQuantity, increaseCartQuantity, decreaseCartQuantity}}>
+        <ShoppingCartContext.Provider value={{ getItemQuantity, increaseCartQuantity, decreaseCartQuantity, removeFromCart}}>
             {children}
         </ShoppingCartContext.Provider>
     )
