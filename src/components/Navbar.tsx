@@ -1,9 +1,12 @@
 import { NavLink } from 'react-router-dom'; 
+import { useShoppingCart, ShoppingContextType } from '../context/shoppingCartContext';
 
 export function Navbar() {
+    const { cartQuantity, openCart } = useShoppingCart() as ShoppingContextType;
+
     return (
         <div className="bg-white shadow-md py-4 px-12 flex flex-row justify-between items-center fixed right-0 top-0 left-0">
-            <nav>
+            <nav className='p-2'>
                 <NavLink to={'/'} className="mr-6">
                     Home
                 </NavLink>
@@ -16,7 +19,8 @@ export function Navbar() {
                     Store
                 </NavLink>
             </nav>
-            <button className=" flex items-center justify-center border-2 border-blue-500 w-[3rem] h-[3rem] p-[0.7rem] rounded-full text-blue-500 hover:bg-blue-500 hover:text-white transition-all" style={{ position: 'relative' }}>
+            { cartQuantity > 0 && (
+            <button onClick={openCart} className=" flex items-center justify-center border-2 border-blue-500 w-[3rem] h-[3rem] p-[0.7rem] rounded-full text-blue-500 hover:bg-blue-500 hover:text-white transition-all" style={{ position: 'relative' }}>
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 576 512"
@@ -34,8 +38,9 @@ export function Navbar() {
                         right: 0,
                         bottom: 0,
                         transform: 'translate(30%, 30%)'
-                    }}>3</div>
+                    }}>{cartQuantity}</div>
             </button>
+            )}
       </div>
       
     )

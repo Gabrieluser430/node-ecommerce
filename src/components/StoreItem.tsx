@@ -45,7 +45,7 @@ export function StoreItem({ id, name, price, imgUrl}: StoreItemsProps) {
                                     <span className="font-semibold text-xl mr-2">{quantity}</span>
                                     in cart
                                 </div>
-                                <button className="bg-blue-500 rounded-md text-white text-xl w-10 h-full">+</button>
+                                <button className="bg-blue-500 rounded-md text-white text-xl w-10 h-full" onClick={() => increaseCartQuantity(id)}>+</button>
                             </div>
                             <div className="">
                                 <button className="bg-red-600 text-white font-semibold rounded-md mt-2 px-6 py-2" onClick={() => removeFromCart(id)}>
