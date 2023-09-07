@@ -1,13 +1,14 @@
 import { useEffect, useRef } from "react";
 import { useShoppingCart, ShoppingContextType } from "../context/shoppingCartContext";
 import { motion, useAnimation } from "framer-motion";
+import { CartItem } from "./CartItem";
 
 type ShoppingCartProps = {
     isOpen: boolean;
 }
 
 export function ShoppingCart({ isOpen }: ShoppingCartProps) {
-    const { closeCart } = useShoppingCart() as ShoppingContextType;
+    const { closeCart, cartItems } = useShoppingCart() as ShoppingContextType;
     const controls = useAnimation();
     const offCanvasRef = useRef<any>();
 
@@ -60,6 +61,12 @@ export function ShoppingCart({ isOpen }: ShoppingCartProps) {
             </div>
 
             <div className="p-4">
+                {cartItems.map(item => {
+                    return <CartItem
+                        key={item.id}
+                        {...item}                        
+                    />
+                })}
             </div>
         </motion.div>
     );
