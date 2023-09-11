@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useShoppingCart, ShoppingContextType } from "../context/shoppingCartContext";
 import { motion, useAnimation } from "framer-motion";
 import { CartItem } from "./CartItem";
@@ -27,7 +27,7 @@ export function ShoppingCart({ isOpen }: ShoppingCartProps) {
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
-            if (offCanvasRef.current &&  !offCanvasRef.current.contains(event.target)) {
+            if (offCanvasRef.current && !offCanvasRef.current.contains(event.target)) {
                 handleCloseClick();
             }
         };
@@ -43,11 +43,18 @@ export function ShoppingCart({ isOpen }: ShoppingCartProps) {
         };
     }, [isOpen]);
 
+    const itemsPerPage = 3;
+    const [currentPage, setCurrentPage] = useState(1);
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const itemsToDisplay = cartItems.slice(startIndex, endIndex);
+    const totalPages = Math.ceil(cartItems.length / itemsPerPage);
+
     return (
         <motion.div
             initial={{ translateX: isOpen ? '0%' : '100%' }}
             animate={controls}
-            className="fixed inset-y-0 right-0 w-1/2 bg-white shadow-lg transition-transform duration-75 lg:w-1/3"
+            className="bg-white fixed inset-y-0 right-0 w-1/2 overflow-y-auto shadow-lg transition-transform duration-75 lg:w-1/3"
             ref={offCanvasRef} 
         >
             <div className="p-4 bg-white flex justify-between items-center px-2 py-2 lg:px-12 lg:py-6 ">
@@ -61,12 +68,24 @@ export function ShoppingCart({ isOpen }: ShoppingCartProps) {
             </div>
 
             <div className="p-4">
-                {cartItems.map(item => {
-                    return <CartItem
+                {itemsToDisplay.map(item => (
+                    <CartItem
                         key={item.id}
                         {...item}                        
                     />
-                })}
+                ))}
+            </div>
+
+            <div className="p-4 flex justify-center">
+                {Array.from({ length: totalPages }, (_, index) => (
+                    <button
+                        key={index}
+                        className={currentPage === index + 1 ? "active" : ""}
+                        onClick={() => setCurrentPage(index + 1)}
+                    >
+                        {index + 1}
+                    </button>
+                ))}
             </div>
         </motion.div>
     );

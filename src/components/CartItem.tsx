@@ -15,25 +15,23 @@ export function CartItem({ id, quantity }: CartItemProps) {
     const formattedPrice = formatCurrency(item.price as number);
     const formattedTotalPrice = formatCurrency(itemTotalPrice as number);
     
-    if (item == null) return null
-
     return (
         <div>
-            <div className=" py-2 pt-6 flex flex-col justify-center items-center mb-6  shadow-lg rounded-lg">
-                <div className="flex flex-col md:flex-row">
-                    <div>
+            <div className="bg-red-200 pt-6 flex flex-col justify-center items-center mb-6 ">
+                <div className="flex flex-col justify-center items-center md:flex-row">
+                    <div className="mr-0 md:mr-6">
                         <img 
                             src={`../../public${item.imgUrl}`}
                             style={{
                                 objectFit: 'cover'
                             }}
-                            className="rounded-lg min-w-[125px] min-h-[75px]"
+                            className="rounded-lg w-[225px] h-[105px] md:h-[150px] lg:h-[175px]"
                             alt={item.name}
                         />
                     </div>
-                    <div className="flex flex-col">
-                        <div className="flex flex-col ">
-                            <div className="flex flex-row items-center">
+                    <div className="flex flex-col py-4 ">
+                        <div className=" flex flex-col">
+                            <div className="flex flex-row">
                                 <h2 className="mr-2 font-semibold">{item.name} </h2>
                                 <span className="text-gray-500 text-sm">x{quantity}</span>
                             </div>
